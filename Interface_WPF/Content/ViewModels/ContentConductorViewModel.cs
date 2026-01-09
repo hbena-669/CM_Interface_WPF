@@ -1,5 +1,7 @@
 ﻿using Caliburn.Micro;
 using Interface_WPF.Content.Messages;
+using Interface_WPF.Interfaces;
+using Interface_WPF.Login.Messages;
 using Interface_WPF.Login.ViewModels;
 using System;
 using System.Collections.Generic;
@@ -10,18 +12,19 @@ using System.Threading.Tasks;
 namespace Interface_WPF.Content.ViewModels
 {
     public class ContentConductorViewModel : Conductor<Screen>,
-        IHandle<NavigateMessage>
+        IHandle<NavigateMessage>//,IHandle<LoginSucceededMessage>
     {
 
         private readonly IEventAggregator _eventAggregator;
         private readonly HomeViewModel _homeViewModel;
         private readonly SettingViewModel _settingViewModel;
         private readonly OrdersViewModel _ordersViewModel;
-
+        private readonly IContextService _contextService;
         public HeaderViewModel Header {  get; }
         public ContentHeaderViewModel ContentHeader { get; }
         public ContentConductorViewModel(
             IEventAggregator eventAggregator,
+            IContextService contextService,
             HomeViewModel homeViewModel,
             SettingViewModel settingViewModel,
             HeaderViewModel headerViewModel,
@@ -29,6 +32,7 @@ namespace Interface_WPF.Content.ViewModels
             ContentHeaderViewModel contentHeader)
         {
             _eventAggregator = eventAggregator;
+            _contextService = contextService;
             _homeViewModel = homeViewModel;
             _settingViewModel = settingViewModel;
             Header = headerViewModel;
@@ -65,5 +69,27 @@ namespace Interface_WPF.Content.ViewModels
             }
             
         }
+
+        public async void InitializeAfterLogin(LoginSucceededMessage message)
+        {
+            await _contextService.LoadAsync(message.Token);
+
+            ContentHeader.Initialize(_contextService.Context);
+            Header.Initialize(_contextService.Context);
+
+            ActivateItem(_homeViewModel);
+        }
+
+        //public async void Handle(LoginSucceededMessage message)
+        //{
+        //    await _contextService.LoadAsync(message.Token);
+
+        //    // 2. Initialiser les écrans transverses
+        //    ContentHeader.Initialize(_contextService.Context);
+        //    Header.Initialize(_contextService.Context);
+
+        //    // 3. Écran par défaut après login
+        //    ActivateItem(_homeViewModel);
+        //}
     }
 }

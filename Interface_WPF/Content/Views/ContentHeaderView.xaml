@@ -9,11 +9,13 @@
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid Background="LightBlue" >
         <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Center">
-            <!-- Icône utilisateur -->
+            <!--Etablissement-->
+            <fa:ImageAwesome Icon="Home" Width="24" Height="24" Margin="0,0,5,0" />
+            <TextBlock Text="{Binding Etablissement}" FontSize="16" VerticalAlignment="Center" Margin="0,0,5,0"/>
+            <!-- Utilisateur -->
             <fa:ImageAwesome Icon="UserCircle" Width="24" Height="24" Margin="0,0,5,0" />
-
-            <!-- Nom de l'utilisateur -->
             <TextBlock Text="{Binding UserName}" FontSize="16" VerticalAlignment="Center" Margin="0,0,5,0"/>
+            
         </StackPanel>
     </Grid>
 </UserControl>

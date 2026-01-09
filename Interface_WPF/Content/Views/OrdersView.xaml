@@ -16,14 +16,13 @@
         </Grid.RowDefinitions>
 
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="Auto" />
-            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="Auto" MinWidth="140" />
+            <ColumnDefinition />
         </Grid.ColumnDefinitions>
         <TextBlock  x:Name="Title"  FontSize="24" HorizontalAlignment="Left" FontWeight="Bold" 
-                    Grid.Row="0" Grid.Column="0" 
-                    Grid.ColumnSpan="2"
-                    Margin="10 10 0 0"/>
-        
+                    Grid.Row="0" Grid.Column="0"
+                    Margin="10,10,0,167" Grid.RowSpan="2" Width="0"/>
+
         <!-- Liste des commandes -->
         <DataGrid ItemsSource="{Binding Orders}" 
                   SelectedItem="{Binding SelectedOrder, Mode=TwoWay}"
@@ -69,7 +68,7 @@
         </DataGrid>
 
         <!-- Détails -->
-        <ScrollViewer Grid.Row="1" Grid.Column="1" Margin="10">
+        <ScrollViewer Grid.Row="1" Grid.Column="1" Margin="10,10,10,10">
             <StackPanel>
                 <Grid  Margin="20 10">
                     <Grid.ColumnDefinitions>

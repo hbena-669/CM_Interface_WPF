@@ -1,16 +1,18 @@
 ﻿using Caliburn.Micro;
+using Interface_WPF.Interfaces;
+using Interface_WPF.Login.Messages;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Interface_WPF.Login.Messages;
 
 namespace Interface_WPF.Login.ViewModels
 {
     public class LoginCredentialsViewModel:Screen
     {
         private readonly IEventAggregator _eventAggregator;
+        private readonly IAuthApi _authApi;
         private string  _userName;
 
         public string  UserName
@@ -34,9 +36,10 @@ namespace Interface_WPF.Login.ViewModels
             }
         }
 
-        public LoginCredentialsViewModel(IEventAggregator eventAggregator)
+        public LoginCredentialsViewModel(IEventAggregator eventAggregator, IAuthApi authApi)
         {
             _eventAggregator = eventAggregator;
+            _authApi = authApi;
             
         }
 
@@ -50,9 +53,12 @@ namespace Interface_WPF.Login.ViewModels
             base.OnDeactivate(close);
             _eventAggregator.Unsubscribe(this);
         }
-        public void Continue()
+        public async void Continue()
         {
-            _eventAggregator.PublishOnUIThread(new ValidLoginCredentialsEntred(new Content.Models.User(_userName,_password,string.Empty)));
+            var result = await _authApi.LoginAsync(UserName, Password);
+
+            _eventAggregator.PublishOnUIThread(
+                new LoginSucceededMessage(result.Token, result.Is2FAEnabled));
         }
 
         public bool CanContinue => !string.IsNullOrWhiteSpace(UserName); //&& !string.IsNullOrWhiteSpace(Password);

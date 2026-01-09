@@ -1,16 +1,19 @@
-﻿using Caliburn.Micro;
-using Autofac;
+﻿using Autofac;
+using Caliburn.Micro;
+using Caliburn.Micro.Autofac;
+using Interface_WPF.Content.Repositories;
+using Interface_WPF.Content.ViewModels;
+using Interface_WPF.Interfaces;
+using Interface_WPF.Login.ViewModels;
+using Interface_WPF.Services;
 using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
-using Caliburn.Micro.Autofac;
-using Interface_WPF.Login.ViewModels;
-using Interface_WPF.Content.ViewModels;
-using Interface_WPF.Content.Repositories;
-using System.Collections.Concurrent;
 
 namespace Interface_WPF
 {
@@ -49,6 +52,28 @@ namespace Interface_WPF
                 .As<IOrdersRepository>()
                 .SingleInstance();
 
+            builder.RegisterType<AuthApi>()
+                .As<IAuthApi>()
+                .SingleInstance();
+
+            builder.RegisterType<ContextService>()
+                .As<IContextService>()
+                .SingleInstance();
+
+            builder.Register(c =>
+            {
+                var handler = new HttpClientHandler
+                {
+                    ServerCertificateCustomValidationCallback =
+                        HttpClientHandler.DangerousAcceptAnyServerCertificateValidator
+                };
+                return new HttpClient(handler)
+                {
+                    BaseAddress = new Uri("https://localhost:7237/")
+                };
+            })
+            .As<HttpClient>()
+            .SingleInstance();
         }
         protected override void ConfigureBootstrapper()
         {

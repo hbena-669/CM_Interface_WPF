@@ -56,7 +56,7 @@ namespace Interface_WPF.Login.ViewModels
 
         public void Continue()
         {
-            _eventAggregator.PublishOnUIThread(new SuccessFullyAuthentificatedMessage(new Content.Models.User(User.UserName,User.UserPassWord,Code2FA)));
+            _eventAggregator.PublishOnUIThread(new SuccessFullyAuthentificatedMessage());
         }
 
         public void Handle(ValidLoginCredentialsEntred message)

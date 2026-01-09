@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Interface_WPF.Content.Messages;
+using Interface_WPF.Dtos;
 
 namespace Interface_WPF.Content.ViewModels
 {
@@ -18,6 +19,11 @@ namespace Interface_WPF.Content.ViewModels
             _eventAggregator.PublishOnUIThread(new NavigateMessage(ContentPage.Home));
         }
 
+        public void Initialize(UserContextDto context)
+        {
+            //Login = context.Login;
+            //Etablissement = context.Etablissements.FirstOrDefault()?.Nom;
+        }
         public void Home()
         {
             _eventAggregator.PublishOnUIThread(new NavigateMessage(ContentPage.Home));

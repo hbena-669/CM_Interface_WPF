@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 namespace Interface_WPF.Login.ViewModels
 {
     public class LogingConductorViewModel: Conductor<Screen>.Collection.OneActive,
-        IHandle<ValidLoginCredentialsEntred>
+        IHandle<LoginSucceededMessage>
     {
         private readonly IEventAggregator _eventAggregator;
         private readonly LoginCredentialsViewModel _loginCredentialsViewModel;
@@ -41,9 +41,17 @@ namespace Interface_WPF.Login.ViewModels
             base.OnDeactivate(close);
             _eventAggregator.Unsubscribe(this);
         }
-        public void Handle(ValidLoginCredentialsEntred message)
+        public void Handle(LoginSucceededMessage message)
         {
-            ActivateItem(_login2FAViewModel);
+            if (!message.Is2FAEnabled)
+            {
+                _eventAggregator.PublishOnUIThread(
+                     new SuccessFullyAuthentificatedMessage(message.Token));
+            }
+            else
+            {
+                
+            }
         }
     }
 

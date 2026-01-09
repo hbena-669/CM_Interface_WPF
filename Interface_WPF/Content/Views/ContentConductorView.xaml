@@ -24,6 +24,6 @@
                 
                 <ContentControl x:Name="ActiveItem" Grid.Row="1"/>
             </Grid>
-        </Grid>
+    </Grid>
     
 </UserControl>

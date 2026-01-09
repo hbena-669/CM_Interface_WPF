@@ -1,6 +1,7 @@
 ﻿using Caliburn.Micro;
 using Interface_WPF.Content.Messages;
 using Interface_WPF.Content.Models;
+using Interface_WPF.Dtos;
 using Interface_WPF.Login.Messages;
 using System;
 using System.Collections.Generic;
@@ -11,13 +12,37 @@ using System.Windows.Navigation;
 
 namespace Interface_WPF.Content.ViewModels
 {
-    public class ContentHeaderViewModel:Screen,IHandle<SuccessFullyAuthentificatedMessage>
+    public class ContentHeaderViewModel:Screen//,IHandle<SuccessFullyAuthentificatedMessage>
     {
-        private User connectedUser;
-        public User ConnectedUser
+        private string _login;
+        public string Login
         {
-            get { return connectedUser; }
-            set { connectedUser = value; }
+            get => _login;
+            set
+            {
+                _login = value;
+                NotifyOfPropertyChange();
+                NotifyOfPropertyChange(nameof(UserName));
+            }
+        }
+
+        private string _etablissement;
+        public string Etablissement
+        {
+            get => _etablissement;
+            set
+            {
+                _etablissement = value;
+                NotifyOfPropertyChange();
+            }
+        }
+
+        public string UserName => Login;
+
+        public void Initialize(UserContextDto context)
+        {
+            Login = context.Login;
+            Etablissement = context.Etablissements.FirstOrDefault()?.Nom;
         }
 
         private IEventAggregator _EventAggregator;
@@ -26,11 +51,11 @@ namespace Interface_WPF.Content.ViewModels
             _EventAggregator = eventAggregator;
             _EventAggregator.Subscribe(this);
         }
-        public void Handle(SuccessFullyAuthentificatedMessage message)
-        {
-            ConnectedUser = message.User;
-        }
+        //public void Handle(SuccessFullyAuthentificatedMessage message)
+        //{
+        //    Token = message.Token;
+        //}
 
-        public string UserName => "Welcom " + ConnectedUser.UserName;
+        //public string UserName => "Welcom " + Login;
     }
 }

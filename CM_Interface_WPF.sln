@@ -4,6 +4,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 VisualStudioVersion = 17.8.34330.188
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Interface_WPF", "Interface_WPF\Interface_WPF.csproj", "{FA558B39-23ED-42E0-92D7-534B2BE3DB03}"
+	ProjectSection(ProjectDependencies) = postProject
+		{475F1532-DE2F-4198-BB07-2DBBC3FD1142} = {475F1532-DE2F-4198-BB07-2DBBC3FD1142}
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Api_Compta", "Api_Compta\Api_Compta.csproj", "{475F1532-DE2F-4198-BB07-2DBBC3FD1142}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +20,10 @@ Global
 		{FA558B39-23ED-42E0-92D7-534B2BE3DB03}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FA558B39-23ED-42E0-92D7-534B2BE3DB03}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FA558B39-23ED-42E0-92D7-534B2BE3DB03}.Release|Any CPU.Build.0 = Release|Any CPU
+		{475F1532-DE2F-4198-BB07-2DBBC3FD1142}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{475F1532-DE2F-4198-BB07-2DBBC3FD1142}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{475F1532-DE2F-4198-BB07-2DBBC3FD1142}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{475F1532-DE2F-4198-BB07-2DBBC3FD1142}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

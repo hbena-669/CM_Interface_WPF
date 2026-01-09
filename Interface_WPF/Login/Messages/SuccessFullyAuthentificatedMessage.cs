@@ -9,16 +9,16 @@ namespace Interface_WPF.Login.Messages
 {
     public class SuccessFullyAuthentificatedMessage
     {
-        private User user;
-        public User User
+        private string _token;
+        public string Token
         {
-            get { return user; }
-            set { user = value; }
+            get { return _token; }
+            set { _token = value; }
         }
 
-        public SuccessFullyAuthentificatedMessage(User? user = null)
+        public SuccessFullyAuthentificatedMessage(string? token = null)
         {
-            User = user;
+            Token = token ?? string.Empty;
         }
     }
 }

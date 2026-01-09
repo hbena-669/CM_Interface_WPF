@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 namespace Interface_WPF
 {
     public class ShellViewModel : Conductor<Screen>,
-        IHandle<SuccessFullyAuthentificatedMessage>
+        IHandle<LoginSucceededMessage>
     {
         private readonly IEventAggregator _eventAggregator;
         private readonly LogingConductorViewModel _logingConductorViewModel;
@@ -43,9 +43,10 @@ namespace Interface_WPF
             _eventAggregator.Unsubscribe(this);
         }
 
-        public void Handle(SuccessFullyAuthentificatedMessage message)
+        public void Handle(LoginSucceededMessage message)
         {
             ActivateItem(_contentConductorViewModel);
+            _contentConductorViewModel.InitializeAfterLogin(message);
         }
 
        
