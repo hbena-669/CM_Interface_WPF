@@ -21,6 +21,7 @@ namespace Interface_WPF.Content.ViewModels
         private readonly OrdersViewModel _ordersViewModel;
         private readonly IContextService _contextService;
         public HeaderViewModel Header {  get; }
+        public HomeComptaViewModel homeComptaViewModel { get; }
         public ContentHeaderViewModel ContentHeader { get; }
         public ContentConductorViewModel(
             IEventAggregator eventAggregator,
@@ -29,7 +30,8 @@ namespace Interface_WPF.Content.ViewModels
             SettingViewModel settingViewModel,
             HeaderViewModel headerViewModel,
             OrdersViewModel ordersViewModel,
-            ContentHeaderViewModel contentHeader)
+            ContentHeaderViewModel contentHeader,
+            HomeComptaViewModel homeComptaViewModel)
         {
             _eventAggregator = eventAggregator;
             _contextService = contextService;
@@ -38,6 +40,7 @@ namespace Interface_WPF.Content.ViewModels
             Header = headerViewModel;
             _ordersViewModel = ordersViewModel;
             ContentHeader = contentHeader;
+            this.homeComptaViewModel = homeComptaViewModel;
 
             //Items.AddRange(new Screen[] { _homeViewModel, _settingViewModel });
         }
@@ -46,7 +49,7 @@ namespace Interface_WPF.Content.ViewModels
         {
             base.OnActivate();
             _eventAggregator.Subscribe(this);
-            ActivateItem(_homeViewModel);
+            //ActivateItem(_homeViewModel);
         }
         protected override void OnDeactivate(bool close)
         {
@@ -57,13 +60,13 @@ namespace Interface_WPF.Content.ViewModels
         {
             switch (message.Page)
             {
-                case ContentPage.Home:
-                    ActivateItem(_homeViewModel);
+                case ContentPage.HOME:
+                    ActivateItem(homeComptaViewModel);
                     break;
-                case ContentPage.Settings:
+                case ContentPage.MENU_ETABLISSEMENTS:
                     ActivateItem(_settingViewModel);
                     break;
-                case ContentPage.Orders:
+                case ContentPage.MENU_BALANCES:
                     ActivateItem(_ordersViewModel);
                     break;
             }
@@ -76,20 +79,11 @@ namespace Interface_WPF.Content.ViewModels
 
             ContentHeader.Initialize(_contextService.Context);
             Header.Initialize(_contextService.Context);
+            homeComptaViewModel.Initialize(_contextService.Context);
 
-            ActivateItem(_homeViewModel);
+            ActivateItem(homeComptaViewModel);
         }
 
-        //public async void Handle(LoginSucceededMessage message)
-        //{
-        //    await _contextService.LoadAsync(message.Token);
-
-        //    // 2. Initialiser les écrans transverses
-        //    ContentHeader.Initialize(_contextService.Context);
-        //    Header.Initialize(_contextService.Context);
-
-        //    // 3. Écran par défaut après login
-        //    ActivateItem(_homeViewModel);
-        //}
+        
     }
 }

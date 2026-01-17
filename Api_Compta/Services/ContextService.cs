@@ -16,7 +16,7 @@ namespace Api_Compta.Services
 
         public async Task<UserContextDto> GetUserContextAsync(Guid userId)
         {
-            var user = await _db.Users
+            var user = await _db.Users.AsNoTracking()
                 .Include(u => u.UserEtablissementRoles)
                     .ThenInclude(uer => uer.Etablissement)
                 .Include(u => u.UserEtablissementRoles)

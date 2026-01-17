@@ -7,6 +7,8 @@ namespace Api_Compta.Models
     {
         public Etablissement()
         {
+            Balances = new HashSet<Balance>();
+            Rubriques = new HashSet<Rubrique>();
             UserEtablissementRoles = new HashSet<UserEtablissementRole>();
         }
 
@@ -16,6 +18,8 @@ namespace Api_Compta.Models
         public bool? IsActive { get; set; }
         public DateTime DateCreation { get; set; }
 
+        public virtual ICollection<Balance> Balances { get; set; }
+        public virtual ICollection<Rubrique> Rubriques { get; set; }
         public virtual ICollection<UserEtablissementRole> UserEtablissementRoles { get; set; }
     }
 }

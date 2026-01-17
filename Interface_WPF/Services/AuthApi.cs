@@ -23,7 +23,60 @@ namespace Interface_WPF.Services
             _http = http;
         }
 
-        public async Task<LoginResultDto> LoginAsync(string login, string password)
+        public async Task<LoginResponseDto> LoginAsync(string login, string password)
+        {
+            try
+            {
+                var payload = new { login, password };
+
+                var content = new StringContent(
+                    JsonSerializer.Serialize(payload),
+                    Encoding.UTF8,
+                    "application/json");
+
+                var response = await _http.PostAsync("auth/login", content);
+
+                if (!response.IsSuccessStatusCode)
+                {
+                    return new LoginResponseDto
+                    {
+                        Success = false,
+                        Result = null,
+                        ErrorMessage = "Identifiants invalides"
+                    };
+                }
+
+                var json = await response.Content.ReadAsStringAsync();
+                var result = JsonSerializer.Deserialize<LoginResultDto>(json, _jsonOptions);
+
+                return new LoginResponseDto
+                {
+                    Success = true,
+                    Result = result,
+                    ErrorMessage = string.Empty
+                };
+            }
+            catch (HttpRequestException ex)
+            {
+                return new LoginResponseDto
+                {
+                    Success = false,
+                    Result = null,
+                    ErrorMessage = "Erreur de connexion au serveur"
+                };
+            }
+            catch (Exception ex)
+            {
+                return new LoginResponseDto
+                {
+                    Success = false,
+                    Result = null,
+                    ErrorMessage = "Une erreur inattendue s'est produite"
+                };
+            }
+        }
+
+        public async Task<LoginResultDto> LoginAsync_old(string login, string password)
         {
             var payload = new
             {

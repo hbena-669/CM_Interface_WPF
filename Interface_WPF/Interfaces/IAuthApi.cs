@@ -9,7 +9,7 @@ namespace Interface_WPF.Interfaces
 {
     public interface IAuthApi
     {
-        Task<LoginResultDto> LoginAsync(string login, string password);
+        Task<LoginResponseDto> LoginAsync(string login, string password);
         Task<UserContextDto> GetContextAsync();
         void SetToken(string token);
     }

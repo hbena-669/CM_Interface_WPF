@@ -3,6 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:local="clr-namespace:Interface_WPF"
              xmlns:local1="clr-namespace:Interface_WPF.Utils"
+             xmlns:local2="clr-namespace:Interface_WPF.Converters"
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes">
     <Application.Resources>
         <ResourceDictionary>
@@ -16,6 +17,9 @@
                 <ResourceDictionary>
                     <local1:StatusToBrushConverter x:Key="StatusToBrushConverter"/>
                 </ResourceDictionary>
+                <ResourceDictionary>
+                    
+                </ResourceDictionary>
 
                 <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesign2.Defaults.xaml" />
                 <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Light.xaml" />
@@ -24,6 +28,6 @@
                 
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
-
+       
     </Application.Resources>
 </Application>

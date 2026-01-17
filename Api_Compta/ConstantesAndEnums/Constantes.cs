@@ -2,6 +2,7 @@
 {
     public static class Constantes
     {
+        public const string ADMIN_ACCESS = "ADMIN_ACCESS";
         public const string MENU_ETABLISSEMENTS = "MENU_ETABLISSEMENTS";
         public const string MENU_USERS = "MENU_USERS";
         public const string MENU_MENUS = "MENU_MENUS";

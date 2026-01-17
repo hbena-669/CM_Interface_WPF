@@ -1,4 +1,5 @@
 ﻿using Caliburn.Micro;
+using Interface_WPF.Dtos;
 using Interface_WPF.Interfaces;
 using Interface_WPF.Login.Messages;
 using System;
@@ -36,6 +37,31 @@ namespace Interface_WPF.Login.ViewModels
             }
         }
 
+        private string _errorMessage;
+        public string ErrorMessage
+        {
+            get { return _errorMessage; }
+            set
+            {
+                _errorMessage = value;
+                NotifyOfPropertyChange(() => ErrorMessage);
+                NotifyOfPropertyChange(() => HasError);
+            }
+        }
+
+        public bool HasError => !string.IsNullOrWhiteSpace(ErrorMessage);
+
+        private bool _isLoading;
+        public bool IsLoading
+        {
+            get { return _isLoading; }
+            set
+            {
+                _isLoading = value;
+                NotifyOfPropertyChange(() => IsLoading);
+                NotifyOfPropertyChange(nameof(CanContinue));
+            }
+        }
         public LoginCredentialsViewModel(IEventAggregator eventAggregator, IAuthApi authApi)
         {
             _eventAggregator = eventAggregator;
@@ -55,14 +81,41 @@ namespace Interface_WPF.Login.ViewModels
         }
         public async void Continue()
         {
-            var result = await _authApi.LoginAsync(UserName, Password);
+            // Réinitialiser le message d'erreur
+            ErrorMessage = string.Empty;
+            IsLoading = true;
 
-            _eventAggregator.PublishOnUIThread(
-                new LoginSucceededMessage(result.Token, result.Is2FAEnabled));
+            try
+            {
+                var respDto = await _authApi.LoginAsync(UserName, Password);
+                bool success = respDto.Success;
+                LoginResultDto? result =  respDto.Result;
+                string errorMessage = respDto.ErrorMessage;
+
+                if (success && result != null)
+                {
+                    _eventAggregator.PublishOnUIThread(
+                        new LoginSucceededMessage(result.Token, result.Is2FAEnabled));
+                }
+                else
+                {
+                    ErrorMessage = errorMessage;
+                    Password = string.Empty;
+                }
+            }
+            catch (Exception ex)
+            {
+                ErrorMessage = "Une erreur inattendue s'est produite";
+            }
+            finally
+            {
+                IsLoading = false;
+            }
         }
 
-        public bool CanContinue => !string.IsNullOrWhiteSpace(UserName); //&& !string.IsNullOrWhiteSpace(Password);
-
+        public bool CanContinue => !string.IsNullOrWhiteSpace(UserName)
+                             && !string.IsNullOrWhiteSpace(Password)
+                             && !IsLoading;
 
     }
 }

@@ -27,8 +27,11 @@ namespace Interface_WPF.Content.Messages
 
     public enum ContentPage
     {
-        Home,
-        Settings,
-        Orders
+        HOME,
+        MENU_USERS,
+        MENU_MENUS,
+        MENU_ETABLISSEMENTS,
+        MENU_STATS,
+        MENU_BALANCES
     }
 }

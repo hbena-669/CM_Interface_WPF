@@ -13,5 +13,13 @@ namespace Interface_WPF.Dtos
 
         public List<EtablissementDto> Etablissements { get; set; } = new();
         public List<string> Permissions { get; set; } = new();
+
+        public bool HasPermission(string permission)
+        {
+            if (Permissions == null || Permissions.Count == 0)
+                return false;
+
+            return Permissions.Contains(permission);
+        }
     }
 }

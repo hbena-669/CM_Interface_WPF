@@ -9,6 +9,24 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Assets\Etablissements\DEFAULT.jpg" />
+    <None Remove="Assets\Etablissements\IPOCA.jpg" />
+    <None Remove="Assets\Etablissements\OXFORD.jpg" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Assets\Etablissements\DEFAULT.jpg">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Assets\Etablissements\IPOCA.jpg">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Assets\Etablissements\OXFORD.jpg">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Caliburn.Micro" Version="3.0.1" />
     <PackageReference Include="Caliburn.Micro.AutofacBootstrap" Version="3.0.1.17" />
     <PackageReference Include="FontAwesome.WPF" Version="4.7.0.9" />

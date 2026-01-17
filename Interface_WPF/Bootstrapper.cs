@@ -35,6 +35,7 @@ namespace Interface_WPF
 
             builder.RegisterType<ContentConductorViewModel>().SingleInstance();
             builder.RegisterType<HomeViewModel>().SingleInstance();
+            builder.RegisterType<HomeComptaViewModel>().SingleInstance();
             builder.RegisterType<SettingViewModel>().SingleInstance();
 
             builder.RegisterType<HeaderViewModel>().SingleInstance();
